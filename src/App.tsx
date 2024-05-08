@@ -16,20 +16,31 @@ import ImageGallery from './components/ImageGallery/ImageGallery';
 import {fetchSearchImages} from './service/serviceAPI.js'
 
 function App() {
+
   const [images, setImages] = useState([]);
   const[loading, setLoading]=useState(false);
   const[error, setError]=useState(false);
+  const [page, setPage] = useState(1);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [hasMore, setHasMore] = useState(true);
 
+  const [selectedImage, setSelectedImage] = useState('');
+  const [modalIsOpen, setModalIsOpen] = useState(false);
 
-// useEffect(()=> {
- const handleSearch= async (searchPhoto)=> {
+  useEffect(() => {   
+    const handleSearch= async ()=> {
+      if (!searchTerm) return; 
   try{
     setImages([])
     setError(false)
     setLoading(true);
+    // setSearchTerm(searchPhoto);
+    setPage(1);
+    setHasMore(true); 
 
-  const data = await fetchSearchImages(searchPhoto);
+  const data = await fetchSearchImages(searchTerm, 1);
   setImages(data);
+  setHasMore(data.length === 15);
 }
 catch(error){
   console.error("Failed to fetch images:", error);
@@ -38,21 +49,51 @@ catch(error){
 finally{
   setLoading(false);
 }
-}
-// fetchImages();
-// },[searchPhoto])
+};
+
+handleSearch();
+}, [searchTerm]); 
+
+//функ- я добавления картинок по клик кнопк 
+const fetchMoreImages = async () => {
+  try {
+    setLoading(true);
+
+    const nextPage = page + 1;
+    const data = await fetchSearchImages(searchTerm, nextPage);
+
+    setImages(prevImages => [...prevImages, ...data]);  
+    setPage(nextPage);
+    setHasMore(data.length === 15);
+
+  } catch (error) {
+    console.error("Failed to load more images:", error);
+    setError(true);
+
+  } finally {
+    setLoading(false);
+  }
+};
+// модал
+ const handleImageClick = imageUrl => {
+    setSelectedImage(imageUrl);
+    setModalIsOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalIsOpen(false);
+  };
 
   return (
     <>   
       <h1>Enter what you want to receive?</h1>
-    <SearchBar  onSearch={handleSearch}/>
-     <LoadMoreBtn/>
-     <ImageGallery images={images}/>
-     {/* <ErrorMessage/> */}
-     {error &&  <ErrorMessage/>}
-     {/* <Loader/> */}
-     {loading && <Loader/>}
-     <ImageModal/>
+    <SearchBar  onSearch={(searchTerm) => setSearchTerm(searchTerm)} />    
+     <ImageGallery images={images} onImageClick={handleImageClick}/>
+     {images.length > 0 && hasMore && <LoadMoreBtn onLoadMore={fetchMoreImages} onImageClick={handleImageClick}/>}
+     {error &&  <ErrorMessage/>}  
+     {loading && <Loader/>}   
+    <ImageModal isOpen={modalIsOpen} onClose={closeModal} imageSrc={selectedImage} />
+
     </>
   )
 }
