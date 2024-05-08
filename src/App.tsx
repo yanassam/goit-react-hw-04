@@ -2,17 +2,17 @@
 
 import { useEffect, useState } from 'react'
 
-import axios from 'axios';
+// import axios from 'axios';
 
 import './App.css';
-import Modal from 'react-modal';
 
-import Loader from './components/Loader/Loader';
-import ErrorMessage from './components/ErrorMessage/ErrorMessage';
-import LoadMoreBtn from './components/LoadMoreBtn/LoadMoreBtn';
-import ImageModal from './components/ImageModal/ImageModal';
-import SearchBar from './components/SearchBar/SearchBar';
-import ImageGallery from './components/ImageGallery/ImageGallery';
+// import {Loader, ErrorMessage, LoadMoreBtn, ImageModal, SearchBar,ImageGallery} from './components'
+import {ErrorMessage} from './components/ErrorMessage/ErrorMessage';
+import {LoadMoreBtn} from './components/LoadMoreBtn/LoadMoreBtn';
+import {Loader} from './components/Loader/Loader';
+import {ImageModal} from './components/ImageModal/ImageModal';
+import {SearchBar} from './components/SearchBar/SearchBar';
+import {ImageGallery} from './components/ImageGallery/ImageGallery';
 import {fetchSearchImages} from './service/serviceAPI.js'
 
 function App() {
@@ -29,12 +29,12 @@ function App() {
 
   useEffect(() => {   
     const handleSearch= async ()=> {
-      if (!searchTerm) return; 
+      if (!searchTerm) return ; 
   try{
     setImages([])
     setError(false)
     setLoading(true);
-    // setSearchTerm(searchPhoto);
+
     setPage(1);
     setHasMore(true); 
 
@@ -86,9 +86,10 @@ const fetchMoreImages = async () => {
 
   return (
     <>   
-      <h1>Enter what you want to receive?</h1>
+    <h1>Enter what you want to receive?</h1>
     <SearchBar  onSearch={(searchTerm) => setSearchTerm(searchTerm)} />    
      <ImageGallery images={images} onImageClick={handleImageClick}/>
+     { searchTerm && images.length === 0 && <h2>Nothing in search</h2>}
      {images.length > 0 && hasMore && <LoadMoreBtn onLoadMore={fetchMoreImages} onImageClick={handleImageClick}/>}
      {error &&  <ErrorMessage/>}  
      {loading && <Loader/>}   

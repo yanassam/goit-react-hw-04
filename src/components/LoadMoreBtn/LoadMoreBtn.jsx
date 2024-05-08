@@ -1,5 +1,5 @@
 import s from "./LoadMoreBtn.module.css";
-const LoadMoreBtn = ({ onLoadMore }) => {
+export const LoadMoreBtn = ({ onLoadMore }) => {
   return (
     <>
       <button onClick={onLoadMore} className={s.button}>
@@ -10,4 +10,4 @@ const LoadMoreBtn = ({ onLoadMore }) => {
   );
 };
 
-export default LoadMoreBtn;
+// export default LoadMoreBtn;

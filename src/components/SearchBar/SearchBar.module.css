@@ -10,6 +10,8 @@
   width: 80%;
   max-width: 600px;
   display: flex;
+  flex-direction: column;
+  gap: 5px;
 }
 
 .input {
@@ -32,4 +34,8 @@
 &hover {
   background-color: #0056b3;
 }
+}
+
+.error{
+  color: tomato;
 }

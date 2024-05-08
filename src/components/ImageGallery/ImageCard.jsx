@@ -1,6 +1,6 @@
 import s from "./ImageCard.module.css";
 
-const ImageCard = ({ image, onClick, likes, description }) => {
+export const ImageCard = ({ image, onClick, likes, description }) => {
   const handleClick = () => {
     onClick(image.urls.full);
   };

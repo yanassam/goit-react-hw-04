@@ -1,5 +1,6 @@
 import s from "./ErrorMessage.module.css";
-const ErrorMessage = () => {
+
+export const ErrorMessage = () => {
   return (
     <div className={s.error}>
       <p>"Something went wrong, try again!"</p>
@@ -7,4 +8,4 @@ const ErrorMessage = () => {
   );
 };
 
-export default ErrorMessage;
+// export default ErrorMessage;

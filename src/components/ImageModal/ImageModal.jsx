@@ -19,7 +19,7 @@ const customStyles = {
     padding: "20px",
   },
 };
-const ImageModal = ({ isOpen, onClose, imageSrc }) => {
+export const ImageModal = ({ isOpen, onClose, imageSrc }) => {
   return (
     <Modal
       isOpen={isOpen}
@@ -50,4 +50,4 @@ const ImageModal = ({ isOpen, onClose, imageSrc }) => {
   );
 };
 
-export default ImageModal;
+// export default ImageModal;
