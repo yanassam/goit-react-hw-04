@@ -34,7 +34,7 @@ function App() {
         setLoading(true);
 
         const data = await fetchSearchImages(searchTerm, page);
-        console.log(data);
+
         setImages((prevState) => [...prevState, ...data]);
         setHasMore(data.length === 15);
       } catch (error) {
