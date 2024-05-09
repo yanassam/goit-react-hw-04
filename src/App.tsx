@@ -61,8 +61,9 @@ const fetchMoreImages = async () => {
 
     const nextPage = page + 1;
     const data = await fetchSearchImages(searchTerm, nextPage);
+    console.log(data)
 
-    setImages(prevImages => [...prevImages, ...data]);  
+    setImages(prevImages => [...prevImages, ...data ]);  
     setPage(nextPage);
     setHasMore(data.length === 15);
 
